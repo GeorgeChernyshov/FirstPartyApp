@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">First Party App</string>
+
+    <!-- screen labels -->
+    <string name="label_home">Home</string>
+
 </resources>
