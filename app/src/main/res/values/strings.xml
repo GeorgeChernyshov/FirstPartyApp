@@ -4,4 +4,8 @@
     <!-- screen labels -->
     <string name="label_home">Home</string>
 
+    <!-- home -->
+    <string name="home_1p">This app is correctly installed as a First Party Application.</string>
+    <string name="home_3p">This app is installed as a Third Party Application. Refer to the documentation for how to install it correctly</string>
+
 </resources>
