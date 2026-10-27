@@ -1,12 +1,15 @@
 package com.example.firstpartyapp.ui.screen
 
 import android.content.pm.ApplicationInfo
+import android.net.wifi.WifiManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -16,8 +19,10 @@ import androidx.compose.ui.tooling.preview.PreviewWrapper
 import androidx.compose.ui.unit.dp
 import com.example.firstpartyapp.R
 import com.example.firstpartyapp.ui.components.AppBar
+import com.example.firstpartyapp.ui.components.Block
 import com.example.firstpartyapp.ui.navigation.Screen
 import com.example.firstpartyapp.ui.theme.ThemePreviewWrapper
+import kotlin.jvm.java
 
 @Composable
 fun HomeScreen() {
@@ -39,6 +44,30 @@ fun HomeScreen() {
                 if (firstParty) R.string.home_1p
                 else R.string.home_3p
             ))
+
+            if (firstParty) {
+                WiFiToggleBlock()
+            }
+        }
+    }
+}
+
+@Composable
+@Preview
+@PreviewWrapper(ThemePreviewWrapper::class)
+fun WiFiToggleBlock() {
+    val context = LocalContext.current
+    val wifiManager = remember {
+        context.getSystemService(WifiManager::class.java)
+    }
+
+    Block {
+        Text(stringResource(R.string.home_wifi_toggle_text))
+
+        Button(onClick = {
+            wifiManager.isWifiEnabled = !wifiManager.isWifiEnabled
+        }) {
+            Text(stringResource(R.string.home_wifi_toggle_button))
         }
     }
 }
