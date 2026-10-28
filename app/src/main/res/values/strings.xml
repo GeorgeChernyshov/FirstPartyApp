@@ -7,6 +7,14 @@
     <!-- home -->
     <string name="home_1p">This app is correctly installed as a First Party Application.</string>
     <string name="home_3p">This app is installed as a Third Party Application. Refer to the documentation for how to install it correctly</string>
+    <string name="home_add_hour_button">Add 1 Hour</string>
+    <string name="home_animation_scale_normal_button">1x</string>
+    <string name="home_animation_scale_text">You can also change the animation scale. Open/close settings or switch between apps to see the effect</string>
+    <string name="home_animation_scale_slow_button">0.2x</string>
+    <string name="home_change_time_text">You can change time</string>
+    <string name="home_reboot_button">Reboot</string>
+    <string name="home_reboot_text">Or, you can just reboot the device</string>
+    <string name="home_remove_hour_button">Remove 1 Hour</string>
     <string name="home_wifi_toggle_button">Toggle</string>
     <string name="home_wifi_toggle_text">For example, you can directly toggle WiFi</string>
 

@@ -1,9 +1,13 @@
 package com.example.firstpartyapp.ui.screen
 
+import android.app.AlarmManager
 import android.content.pm.ApplicationInfo
 import android.net.wifi.WifiManager
+import android.os.PowerManager
+import android.provider.Settings
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.Scaffold
@@ -47,6 +51,9 @@ fun HomeScreen() {
 
             if (firstParty) {
                 WiFiToggleBlock()
+                AnimationScaleBlock()
+                ChangeTimeBlock()
+                RebootBlock()
             }
         }
     }
@@ -68,6 +75,111 @@ fun WiFiToggleBlock() {
             wifiManager.isWifiEnabled = !wifiManager.isWifiEnabled
         }) {
             Text(stringResource(R.string.home_wifi_toggle_button))
+        }
+    }
+}
+
+@Composable
+@Preview
+@PreviewWrapper(ThemePreviewWrapper::class)
+fun AnimationScaleBlock() {
+    val context = LocalContext.current
+
+    Block {
+        Text(stringResource(R.string.home_animation_scale_text))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(
+                onClick = {
+                    listOf(
+                        Settings.Global.WINDOW_ANIMATION_SCALE,
+                        Settings.Global.TRANSITION_ANIMATION_SCALE,
+                        Settings.Global.ANIMATOR_DURATION_SCALE
+                    ).forEach { setting ->
+                        Settings.Global.putFloat(
+                            context.contentResolver,
+                            setting,
+                            1f
+                        )
+                    }
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.home_animation_scale_normal_button))
+            }
+
+            Button(
+                onClick = {
+                    listOf(
+                        Settings.Global.WINDOW_ANIMATION_SCALE,
+                        Settings.Global.TRANSITION_ANIMATION_SCALE,
+                        Settings.Global.ANIMATOR_DURATION_SCALE
+                    ).forEach { setting ->
+                        Settings.Global.putFloat(
+                            context.contentResolver,
+                            setting,
+                            5f
+                        )
+                    }
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.home_animation_scale_slow_button))
+            }
+        }
+    }
+}
+
+@Composable
+@Preview
+@PreviewWrapper(ThemePreviewWrapper::class)
+fun ChangeTimeBlock() {
+    val context = LocalContext.current
+    val alarmManager = remember {
+        context.getSystemService(AlarmManager::class.java)
+    }
+
+    Block {
+        Text(stringResource(R.string.home_change_time_text))
+
+        Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            Button(
+                onClick = {
+                    alarmManager.setTime(System.currentTimeMillis() + 3_600_000L)
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.home_add_hour_button))
+            }
+
+            Button(
+                onClick = {
+                    alarmManager.setTime(System.currentTimeMillis() - 3_600_000L)
+                },
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(stringResource(R.string.home_remove_hour_button))
+            }
+        }
+    }
+}
+
+@Composable
+@Preview
+@PreviewWrapper(ThemePreviewWrapper::class)
+fun RebootBlock() {
+    val context = LocalContext.current
+    val powerManager = remember {
+        context.getSystemService(PowerManager::class.java)
+    }
+
+    Block {
+        Text(stringResource(R.string.home_reboot_text))
+
+        Button(onClick = {
+            powerManager.reboot(null)
+        }) {
+            Text(stringResource(R.string.home_reboot_button))
         }
     }
 }
