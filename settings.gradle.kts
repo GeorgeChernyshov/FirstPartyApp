@@ -24,4 +24,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "First Party App"
 include(":app")
- 
+include(":companion")

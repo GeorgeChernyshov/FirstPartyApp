@@ -3,6 +3,18 @@
 
     <!-- screen labels -->
     <string name="label_home">Home</string>
+    <string name="label_companion_app">Companion App</string>
+
+    <!-- common buttons -->
+    <string name="button_next">Next</string>
+
+    <!-- companion -->
+    <string name="companion_title">Have you noticed that another app was installed when you opened this app?</string>
+    <string name="companion_delete">Delete</string>
+    <string name="companion_delete_text">Press this button to delete the invasive app</string>
+    <string name="companion_hide">Hide</string>
+    <string name="companion_hide_text">You can also hide this app</string>
+    <string name="companion_show">Show</string>
 
     <!-- home -->
     <string name="home_1p">This app is correctly installed as a First Party Application.</string>

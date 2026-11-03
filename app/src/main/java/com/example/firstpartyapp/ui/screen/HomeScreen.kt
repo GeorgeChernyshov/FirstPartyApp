@@ -29,7 +29,7 @@ import com.example.firstpartyapp.ui.theme.ThemePreviewWrapper
 import kotlin.jvm.java
 
 @Composable
-fun HomeScreen() {
+fun HomeScreen(onNextClick: () -> Unit) {
     val applicationInfo = LocalContext.current.applicationInfo
     val systemFlags = ApplicationInfo.FLAG_SYSTEM or ApplicationInfo.FLAG_UPDATED_SYSTEM_APP
     val firstParty = (applicationInfo.flags and systemFlags) != 0
@@ -54,6 +54,10 @@ fun HomeScreen() {
                 AnimationScaleBlock()
                 ChangeTimeBlock()
                 RebootBlock()
+
+                Button(onClick = onNextClick) {
+                    Text(stringResource(R.string.button_next))
+                }
             }
         }
     }
@@ -188,5 +192,5 @@ fun RebootBlock() {
 @Preview
 @PreviewWrapper(ThemePreviewWrapper::class)
 fun HomeScreenPreview() {
-    HomeScreen()
+    HomeScreen(onNextClick = {})
 }

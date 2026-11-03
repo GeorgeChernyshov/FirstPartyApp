@@ -12,4 +12,10 @@ sealed class Screen(val route: String, @StringRes val resourceId: Int) {
         route = "home",
         resourceId = R.string.label_home
     )
+
+    @Serializable
+    data object CompanionApp : Screen(
+        route = "companionApp",
+        resourceId = R.string.label_companion_app
+    )
 }

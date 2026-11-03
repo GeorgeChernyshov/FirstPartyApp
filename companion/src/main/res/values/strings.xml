@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">companion</string>
+
+    <string name="greeting">How did this app get here?</string>
+</resources>
