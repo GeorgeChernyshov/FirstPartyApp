@@ -91,20 +91,7 @@ It should display `uid=0(root)` in the beginning of its output
 
 3. Use the repository's [permission allowlist](permissions.xml). Its entries must match permissions requested in the preinstalled APK. Run the following commands one line at a time from the project root.
 
-4. Copy the APK into the privileged app directory and install the allowlist on the same partition. Complete both before rebooting: missing privileged permission allowlist entries can prevent Android from booting when enforcement is enabled.
-
-   ```powershell
-   adb shell mkdir -p /system/priv-app/FirstPartyApp
-   adb push app/build/outputs/apk/debug/app-debug.apk /system/priv-app/FirstPartyApp/FirstPartyApp.apk
-   adb push permissions.xml /system/etc/permissions/permissions-firstpartyapp.xml
-   adb shell chown root:root /system/priv-app/FirstPartyApp /system/priv-app/FirstPartyApp/FirstPartyApp.apk /system/etc/permissions/permissions-firstpartyapp.xml
-   adb shell chmod 755 /system/priv-app/FirstPartyApp
-   adb shell chmod 644 /system/priv-app/FirstPartyApp/FirstPartyApp.apk /system/etc/permissions/permissions-firstpartyapp.xml
-   adb shell restorecon -R /system/priv-app/FirstPartyApp
-   adb shell restorecon /system/etc/permissions/permissions-firstpartyapp.xml
-   adb reboot
-   adb wait-for-device
-   ```
+4. Run the installation script - `install.sh` for Linux/Mac or `install.ps1` for Windows
 
 From now on, you can just launch the app from emulator home screen
 
