@@ -11,10 +11,12 @@
     <!-- companion -->
     <string name="companion_title">Have you noticed that another app was installed when you opened this app?</string>
     <string name="companion_delete">Delete</string>
+    <string name="companion_deleted">Now you are safe! Until you reopen this app :)</string>
     <string name="companion_delete_text">Press this button to delete the invasive app</string>
-    <string name="companion_hide">Hide</string>
-    <string name="companion_hide_text">You can also hide this app</string>
-    <string name="companion_show">Show</string>
+    <string name="companion_hide">Disable</string>
+    <string name="companion_hide_text">You can also disable this app</string>
+    <string name="companion_show">Enable</string>
+    <string name="companion_show_text">Now the app is disabled, so you can\'t manually open it. Background tasks still function.</string>
 
     <!-- home -->
     <string name="home_1p">This app is correctly installed as a First Party Application.</string>

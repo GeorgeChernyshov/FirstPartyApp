@@ -1,6 +1,5 @@
 package com.example.firstpartyapp.ui.screen
 
-import android.content.pm.PackageManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -10,15 +9,17 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.example.firstpartyapp.R
+import com.example.firstpartyapp.data.companion.CompanionAppState
 import com.example.firstpartyapp.ui.components.AppBar
 import com.example.firstpartyapp.ui.navigation.Screen
 
 @Composable
 fun CompanionAppScreen(
+    companionAppState: CompanionAppState,
+    toggleVisibility: () -> Unit,
     onDeleteClick: () -> Unit
 ) {
     Scaffold(
@@ -31,15 +32,28 @@ fun CompanionAppScreen(
             verticalArrangement = Arrangement.spacedBy(12.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(stringResource(R.string.companion_title))
+            if (companionAppState != CompanionAppState.DELETED) {
+                Text(stringResource(R.string.companion_title))
 
-            Text(stringResource(R.string.companion_hide_text))
-            Button(onClick = {}) {}
+                Text(stringResource(
+                    if (companionAppState == CompanionAppState.VISIBLE)
+                        R.string.companion_hide_text
+                    else R.string.companion_show_text
+                ))
 
-            Text(stringResource(R.string.companion_delete_text))
-            Button(onClick = onDeleteClick) {
-                Text(stringResource(R.string.companion_delete))
-            }
+                Button(onClick = toggleVisibility) {
+                    Text(stringResource(
+                        if (companionAppState == CompanionAppState.VISIBLE)
+                            R.string.companion_hide
+                        else R.string.companion_show
+                    ))
+                }
+
+                Text(stringResource(R.string.companion_delete_text))
+                Button(onClick = onDeleteClick) {
+                    Text(stringResource(R.string.companion_delete))
+                }
+            } else Text(stringResource(R.string.companion_deleted))
         }
     }
 }

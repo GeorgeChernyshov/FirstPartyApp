@@ -5,6 +5,8 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -12,19 +14,19 @@ import com.example.firstpartyapp.ui.navigation.Screen
 import com.example.firstpartyapp.ui.screen.CompanionAppScreen
 import com.example.firstpartyapp.ui.screen.HomeScreen
 import com.example.firstpartyapp.ui.theme.FirstPartyAppTheme
-import com.example.firstpartyapp.util.CompanionAppManager
+import com.example.firstpartyapp.data.companion.CompanionAppRepository
 
 class MainActivity : ComponentActivity() {
 
-    private lateinit var companionAppManager: CompanionAppManager
+    private lateinit var companionAppRepository: CompanionAppRepository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent { App() }
 
-        companionAppManager = CompanionAppManager(this)
-        companionAppManager.installCompanion()
+        companionAppRepository = CompanionAppRepository(this)
+        companionAppRepository.installCompanion()
     }
 
     @Composable
@@ -37,8 +39,12 @@ class MainActivity : ComponentActivity() {
                 startDestination = Screen.Home
             ) {
                 composable<Screen.CompanionApp> {
+                    val state by companionAppRepository.state.collectAsState()
+
                     CompanionAppScreen(
-                        onDeleteClick = companionAppManager::deleteCompanion
+                        companionAppState = state,
+                        toggleVisibility = companionAppRepository::setCompanionVisible,
+                        onDeleteClick = companionAppRepository::deleteCompanion
                     )
                 }
 

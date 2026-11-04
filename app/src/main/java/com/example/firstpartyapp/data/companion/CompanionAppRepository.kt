@@ -1,18 +1,24 @@
-package com.example.firstpartyapp.util
+package com.example.firstpartyapp.data.companion
 
 import android.Manifest
 import android.app.PendingIntent
+import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageInstaller
 import android.content.pm.PackageManager
 import androidx.annotation.RequiresPermission
 import com.example.firstpartyapp.InstallResultReceiver
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
-class CompanionAppManager(private val context: Context) {
+class CompanionAppRepository(private val context: Context) {
 
     private val packageManager = context.packageManager
     private val assets = context.assets
+
+    private val _state = MutableStateFlow(CompanionAppState.VISIBLE)
+    val state = _state.asStateFlow()
 
     fun installCompanion() {
         val installer = packageManager.packageInstaller
@@ -62,6 +68,29 @@ class CompanionAppManager(private val context: Context) {
             COMPANION_PACKAGE,
             callback.intentSender
         )
+
+        _state.value = CompanionAppState.DELETED
+    }
+
+
+    fun setCompanionVisible() {
+        val visible = (_state.value == CompanionAppState.HIDDEN)
+
+        val activity = ComponentName(
+            COMPANION_PACKAGE,
+            "$COMPANION_PACKAGE.MainActivity"
+        )
+
+        packageManager.setComponentEnabledSetting(
+            activity,
+            if (visible) PackageManager.COMPONENT_ENABLED_STATE_ENABLED
+            else PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
+            0
+        )
+
+        _state.value = if (visible)
+            CompanionAppState.VISIBLE
+        else CompanionAppState.HIDDEN
     }
 
     companion object {
